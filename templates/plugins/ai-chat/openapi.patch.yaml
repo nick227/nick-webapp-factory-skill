@@ -1,0 +1,51 @@
+# Merge these blocks into packages/api-spec/openapi.yaml
+
+# --- components/schemas ---
+# Add alongside existing schemas:
+
+ChatMessage:
+  type: object
+  required: [role, content]
+  properties:
+    role:
+      type: string
+      enum: [user, assistant]
+    content:
+      type: string
+
+ChatInput:
+  type: object
+  required: [messages]
+  properties:
+    messages:
+      type: array
+      items: { $ref: '#/components/schemas/ChatMessage' }
+    systemPrompt:
+      type: string
+      description: Optional system prompt override
+
+# --- paths ---
+# Add alongside existing paths:
+
+/chat:
+  post:
+    operationId: chat
+    tags: [chat]
+    summary: Stream an AI response (SSE)
+    description: >
+      Returns a text/event-stream. Each event is JSON: { "text": "..." }.
+      The stream ends with data: [DONE].
+      Note: the frontend SDK hook calls fetch() directly for this route --
+      openapi-fetch does not support streaming responses.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ChatInput' }
+    responses:
+      '200':
+        description: SSE stream of text deltas
+        content:
+          text/event-stream:
+            schema:
+              type: string

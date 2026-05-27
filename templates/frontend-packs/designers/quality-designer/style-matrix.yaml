@@ -1,0 +1,66 @@
+version: 1
+archetypes:
+  bbq-joint:
+    energy: lively, tactile, local
+    density: balanced
+    media: food, venue, people
+    layout: full-bleed hero, menu bands, location strip, gallery
+    tokens: warm contrast, charred darks, tomato/red accent, paper surfaces
+    avoid: generic SaaS cards, wellness beige, abstract gradients
+  wellness-app:
+    energy: calm, trustworthy, restorative
+    density: sparse
+    media: people, routines, soft product imagery
+    layout: guided flows, progress panels, soft section rhythm
+    tokens: low contrast neutrals, botanical accent, gentle borders
+    avoid: loud colors, heavy shadows, gamified clutter
+  saas-admin:
+    energy: focused, fast, operational
+    density: dense
+    media: charts, tables, status
+    layout: sidebar shell, data toolbar, table/detail split
+    tokens: restrained neutral base, one clear action accent
+    avoid: marketing hero, decorative blobs, oversized cards
+  creator-social:
+    energy: expressive, personal, current
+    density: balanced
+    media: avatars, posts, image/video cards
+    layout: feed column, composer, profile header, media grid
+    tokens: warm surface, strong primary, playful accent
+    avoid: corporate dashboard feel, anonymous placeholder content
+  ai-workbench:
+    energy: precise, capable, experimental
+    density: dense
+    media: prompts, outputs, previews
+    layout: prompt panel, result canvas, history rail
+    tokens: dark-capable neutral base, high signal states
+    avoid: chat-only layout when outputs are visual or structured
+  marketplace:
+    energy: browsable, confident, commercial
+    density: balanced
+    media: product or listing photos
+    layout: search/filter rail, card grid, detail drawer
+    tokens: clear surface hierarchy, trust badges, price/status emphasis
+    avoid: social feed as primary layout
+dimensions:
+  identity:
+    - quiet
+    - expressive
+    - premium
+    - playful
+    - utilitarian
+  density:
+    - sparse
+    - balanced
+    - dense
+  shape:
+    - sharp
+    - soft
+    - tactile
+  media:
+    - none
+    - editorial
+    - product
+    - people
+    - dashboard
+    - generated

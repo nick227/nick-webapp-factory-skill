@@ -1,0 +1,271 @@
+openapi: 3.1.0
+info:
+  title: Reference Social Feed API
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:3001
+    description: Local dev
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+  parameters:
+    Cursor:
+      in: query
+      name: cursor
+      schema:
+        type: string
+    Limit:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+
+    Profile:
+      type: object
+      required: [id, userId, username, displayName, createdAt]
+      properties:
+        id: { type: string }
+        userId: { type: string }
+        username: { type: string }
+        displayName: { type: string }
+        createdAt: { type: string, format: date-time }
+
+    User:
+      type: object
+      required: [id, email, createdAt]
+      properties:
+        id: { type: string }
+        email: { type: string, format: email }
+        createdAt: { type: string, format: date-time }
+        profile:
+          anyOf:
+            - $ref: '#/components/schemas/Profile'
+            - type: 'null'
+
+    AuthResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
+
+    RegisterInput:
+      type: object
+      required: [email, username, password]
+      additionalProperties: false
+      properties:
+        email: { type: string, format: email }
+        username: { type: string, minLength: 3, maxLength: 32 }
+        password: { type: string, minLength: 8, format: password }
+        displayName: { type: string, minLength: 1, maxLength: 80 }
+
+    LoginInput:
+      type: object
+      required: [email, password]
+      additionalProperties: false
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8, format: password }
+
+    Post:
+      type: object
+      required: [id, authorId, body, createdAt]
+      properties:
+        id: { type: string }
+        authorId: { type: string }
+        body: { type: string }
+        createdAt: { type: string, format: date-time }
+        author:
+          anyOf:
+            - $ref: '#/components/schemas/User'
+            - type: 'null'
+
+    CreatePostInput:
+      type: object
+      required: [body]
+      additionalProperties: false
+      properties:
+        body: { type: string, minLength: 1, maxLength: 280 }
+
+    PostResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Post'
+
+    PaginatedMeta:
+      type: object
+      required: [hasMore, nextCursor]
+      properties:
+        hasMore: { type: boolean }
+        nextCursor:
+          anyOf:
+            - type: string
+            - type: 'null'
+
+    PaginatedPosts:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        meta:
+          $ref: '#/components/schemas/PaginatedMeta'
+
+paths:
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterInput'
+      responses:
+        '201':
+          description: Registered user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        '200':
+          description: Logged-in user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      responses:
+        '200':
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: 'null'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/me:
+    get:
+      operationId: getCurrentUser
+      tags: [auth]
+      responses:
+        '200':
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /posts/feed:
+    get:
+      operationId: getFeed
+      tags: [posts]
+      parameters:
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Feed posts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPosts'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /posts:
+    post:
+      operationId: createPost
+      tags: [posts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostInput'
+      responses:
+        '201':
+          description: Created post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

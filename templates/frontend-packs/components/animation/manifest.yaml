@@ -1,0 +1,41 @@
+name: animation
+type: component
+adds: Framer Motion animation primitives — FadeIn, SlideUp, StaggerList, PageTransition
+deps:
+  web:
+    - framer-motion
+copy:
+  - FadeIn.tsx -> apps/web/src/components/animation/FadeIn.tsx
+  - SlideUp.tsx -> apps/web/src/components/animation/SlideUp.tsx
+  - StaggerList.tsx -> apps/web/src/components/animation/StaggerList.tsx
+  - PageTransition.tsx -> apps/web/src/components/animation/PageTransition.tsx
+  - index.ts -> apps/web/src/components/animation/index.ts
+notes: |
+  framer-motion is ~100kb gzipped. Only install when motion quality justifies the weight —
+  quality-designer workflow, premium/expressive archetypes, studio-quality direction.
+
+  FadeIn and SlideUp animate once on scroll entry (useInView, once: true).
+  StaggerList wraps any list container and staggers children — drop-in over grid/flex layouts.
+  PageTransition requires AnimatePresence in App.tsx — see the component docstring for wiring.
+usage: |
+  import { FadeIn, SlideUp, StaggerList, PageTransition } from '@/components/animation'
+
+  // Fade in a section when it enters the viewport
+  <FadeIn delay={0.1}>
+    <HeroContent />
+  </FadeIn>
+
+  // Slide a heading up on entry
+  <SlideUp distance={32}>
+    <h1>Studio Quality</h1>
+  </SlideUp>
+
+  // Stagger a card grid
+  <StaggerList className="grid grid-cols-3 gap-6">
+    {products.map(p => <ProductCard key={p.id} {...p} />)}
+  </StaggerList>
+
+  // Wrap each page for route transitions (requires AnimatePresence in App.tsx)
+  export default function MyPage() {
+    return <PageTransition><main>...</main></PageTransition>
+  }

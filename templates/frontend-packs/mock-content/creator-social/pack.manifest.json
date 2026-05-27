@@ -1,0 +1,8 @@
+{
+  "name": "creator-social",
+  "type": "mock-content",
+  "description": "Creator profiles and posts fixtures.",
+  "copy": [
+    { "from": "fixtures.ts", "to": "apps/web/src/mock/creatorSocial.ts" }
+  ]
+}

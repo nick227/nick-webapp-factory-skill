@@ -1,0 +1,27 @@
+{
+  "name": "ai-chat",
+  "type": "plugin",
+  "description": "Streaming Anthropic chatbot with SSE handler, SDK hook, and ChatWidget.",
+  "requires": [],
+  "deps": {
+    "server": ["@anthropic-ai/sdk"]
+  },
+  "copy": [
+    { "from": "server/handlers/chat.ts", "to": "apps/server/src/handlers/chat.ts" },
+    { "from": "server/services/ChatService.ts", "to": "apps/server/src/services/ChatService.ts" },
+    { "from": "sdk/hooks/useChat.ts", "to": "packages/sdk/src/hooks/useChat.ts" },
+    { "from": "web/components/ChatWidget.tsx", "to": "apps/web/src/components/ChatWidget.tsx" }
+  ],
+  "patches": {
+    "env": "env.patch.md",
+    "openapi": "openapi.patch.yaml"
+  },
+  "exports": {
+    "apps/server/src/handlers/index.ts": ["export * from './chat'"],
+    "packages/sdk/src/hooks/index.ts": ["export * from './useChat'"]
+  },
+  "manual": [
+    "Merge OpenAPI pending patch, then run pnpm sdk:generate and pnpm test:generate.",
+    "useChat calls fetch directly because the endpoint streams SSE."
+  ]
+}

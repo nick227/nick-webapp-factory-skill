@@ -1,0 +1,13 @@
+{
+  "name": "activity-feed",
+  "type": "component-pack",
+  "description": "Activity feed and composer components.",
+  "requires": ["Avatar", "Button", "Card", "Textarea"],
+  "copy": [
+    { "from": "ActivityFeed.tsx", "to": "apps/web/src/components/activity/ActivityFeed.tsx" },
+    { "from": "ActivityComposer.tsx", "to": "apps/web/src/components/activity/ActivityComposer.tsx" }
+  ],
+  "exports": {
+    "apps/web/src/components/activity/index.ts": ["export * from './ActivityFeed'", "export * from './ActivityComposer'"]
+  }
+}

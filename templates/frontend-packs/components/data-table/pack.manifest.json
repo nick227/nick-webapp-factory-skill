@@ -1,0 +1,12 @@
+{
+  "name": "data-table",
+  "type": "component-pack",
+  "description": "Generic data table shell with search and load-more controls.",
+  "requires": ["Button", "Input"],
+  "copy": [
+    { "from": "DataTable.tsx", "to": "apps/web/src/components/data/DataTable.tsx" }
+  ],
+  "exports": {
+    "apps/web/src/components/data/index.ts": ["export * from './DataTable'"]
+  }
+}

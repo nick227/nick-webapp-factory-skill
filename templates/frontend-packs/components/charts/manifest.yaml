@@ -1,0 +1,56 @@
+name: charts
+type: component
+adds: Recharts chart components wired to project CSS token colors — LineChart, BarChart, AreaChart, PieChart
+deps:
+  web:
+    - recharts
+copy:
+  - chart-utils.ts -> apps/web/src/components/charts/chart-utils.ts
+  - LineChart.tsx -> apps/web/src/components/charts/LineChart.tsx
+  - BarChart.tsx -> apps/web/src/components/charts/BarChart.tsx
+  - AreaChart.tsx -> apps/web/src/components/charts/AreaChart.tsx
+  - PieChart.tsx -> apps/web/src/components/charts/PieChart.tsx
+  - index.ts -> apps/web/src/components/charts/index.ts
+notes: |
+  recharts is ~300kb gzipped. Only install in apps with a real data visualization need —
+  dashboards, analytics, admin panels, reporting. Pairs well with admin-ops theme and dashboard page pack.
+
+  All charts read hsl(var(--primary)), hsl(var(--accent)), hsl(var(--border)) etc. so they
+  inherit the active theme automatically — no manual color configuration needed.
+
+  All charts accept a loading prop that shows a Skeleton at the same dimensions.
+  All charts are wrapped in ResponsiveContainer — set height via the height prop (default 300).
+usage: |
+  import { LineChart, BarChart, AreaChart, PieChart } from '@/components/charts'
+
+  // Line chart — single or multi-series
+  <LineChart
+    data={monthlyRevenue}
+    xKey="month"
+    series={[{ key: 'revenue', label: 'Revenue' }]}
+    height={300}
+    loading={isLoading}
+  />
+
+  // Bar chart — stacked
+  <BarChart
+    data={salesByCategory}
+    xKey="category"
+    series={[
+      { key: 'online' },
+      { key: 'inStore', label: 'In Store' },
+    ]}
+    stacked
+  />
+
+  // Area chart — gradient fill, good for trends
+  <AreaChart data={visitors} xKey="date" series={[{ key: 'count' }]} />
+
+  // Pie / donut chart
+  <PieChart
+    data={[
+      { name: 'Mobile', value: 60 },
+      { name: 'Desktop', value: 40 },
+    ]}
+    innerRadius="60%"
+  />

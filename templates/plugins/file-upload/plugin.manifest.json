@@ -1,0 +1,32 @@
+{
+  "name": "file-upload",
+  "type": "plugin",
+  "description": "Local file uploads with provider abstraction and drag-and-drop component.",
+  "requires": [],
+  "deps": {
+    "server": ["@fastify/multipart", "@fastify/static", "fastify-plugin"]
+  },
+  "copy": [
+    { "from": "server/providers/storage.ts", "to": "apps/server/src/providers/storage.ts" },
+    { "from": "server/providers/LocalStorageProvider.ts", "to": "apps/server/src/providers/LocalStorageProvider.ts" },
+    { "from": "server/services/MediaService.ts", "to": "apps/server/src/services/MediaService.ts" },
+    { "from": "server/handlers/media.ts", "to": "apps/server/src/handlers/media.ts" },
+    { "from": "server/plugins/uploads.ts", "to": "apps/server/src/plugins/uploads.ts" },
+    { "from": "sdk/hooks/useUpload.ts", "to": "packages/sdk/src/hooks/useUpload.ts" },
+    { "from": "web/components/FileUpload.tsx", "to": "apps/web/src/components/FileUpload.tsx" }
+  ],
+  "patches": {
+    "env": "env.patch.md",
+    "schema": "schema.patch.md",
+    "openapi": "openapi.patch.yaml"
+  },
+  "exports": {
+    "apps/server/src/handlers/index.ts": ["export * from './media'"],
+    "packages/sdk/src/hooks/index.ts": ["export * from './useUpload'"]
+  },
+  "manual": [
+    "Register uploadsPlugin in apps/server/src/index.ts before openapiGlue.",
+    "Add apps/server/uploads/ to .gitignore.",
+    "Run pnpm sdk:generate and pnpm test:generate after merging OpenAPI."
+  ]
+}

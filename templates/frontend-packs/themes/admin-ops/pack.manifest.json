@@ -1,0 +1,11 @@
+{
+  "name": "admin-ops",
+  "type": "theme",
+  "description": "Restrained operations/dashboard token set.",
+  "copy": [
+    { "from": "tokens.css", "to": "apps/web/src/styles/admin-ops.tokens.css" }
+  ],
+  "manual": [
+    "Import './styles/admin-ops.tokens.css' from apps/web/src/main.tsx after index.css."
+  ]
+}

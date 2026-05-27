@@ -1,0 +1,19 @@
+{
+  "name": "animation",
+  "type": "component-pack",
+  "description": "Framer Motion primitives for studio-quality transitions.",
+  "deps": {
+    "web": ["framer-motion"]
+  },
+  "copy": [
+    { "from": "FadeIn.tsx", "to": "apps/web/src/components/animation/FadeIn.tsx" },
+    { "from": "SlideUp.tsx", "to": "apps/web/src/components/animation/SlideUp.tsx" },
+    { "from": "StaggerList.tsx", "to": "apps/web/src/components/animation/StaggerList.tsx" },
+    { "from": "PageTransition.tsx", "to": "apps/web/src/components/animation/PageTransition.tsx" },
+    { "from": "index.ts", "to": "apps/web/src/components/animation/index.ts" }
+  ],
+  "manual": [
+    "Use sparingly; framer-motion adds bundle weight.",
+    "PageTransition requires AnimatePresence wiring in App.tsx."
+  ]
+}

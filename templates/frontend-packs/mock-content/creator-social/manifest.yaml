@@ -1,0 +1,4 @@
+name: creator-social
+type: mock-content
+copy:
+  - fixtures.ts -> apps/web/src/mock/creatorSocial.ts

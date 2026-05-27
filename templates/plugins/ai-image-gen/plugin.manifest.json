@@ -1,0 +1,33 @@
+{
+  "name": "ai-image-gen",
+  "type": "plugin",
+  "description": "Text-to-image generation with provider backends and generated media history.",
+  "requires": ["file-upload"],
+  "deps": {
+    "serverOptional": ["openai"]
+  },
+  "copy": [
+    { "from": "server/providers/imagegen.ts", "to": "apps/server/src/providers/imagegen.ts" },
+    { "from": "server/providers/DezgoProvider.ts", "to": "apps/server/src/providers/DezgoProvider.ts" },
+    { "from": "server/providers/OpenAIDalleProvider.ts", "to": "apps/server/src/providers/OpenAIDalleProvider.ts" },
+    { "from": "server/providers/LocalDiffusionProvider.ts", "to": "apps/server/src/providers/LocalDiffusionProvider.ts" },
+    { "from": "server/services/ImageGenService.ts", "to": "apps/server/src/services/ImageGenService.ts" },
+    { "from": "server/handlers/imageGen.ts", "to": "apps/server/src/handlers/imageGen.ts" },
+    { "from": "sdk/hooks/useImageGen.ts", "to": "packages/sdk/src/hooks/useImageGen.ts" },
+    { "from": "web/components/ImageGenWidget.tsx", "to": "apps/web/src/components/ImageGenWidget.tsx" }
+  ],
+  "patches": {
+    "env": "env.patch.md",
+    "schema": "schema.patch.md",
+    "openapi": "openapi.patch.yaml"
+  },
+  "exports": {
+    "apps/server/src/handlers/index.ts": ["export * from './imageGen'"],
+    "packages/sdk/src/hooks/index.ts": ["export * from './useImageGen'"]
+  },
+  "manual": [
+    "Install file-upload first.",
+    "Install openai only when IMAGE_GEN_PROVIDER=openai.",
+    "Merge schema/openapi pending patches, then run pnpm db:push, pnpm sdk:generate, and pnpm test:generate."
+  ]
+}

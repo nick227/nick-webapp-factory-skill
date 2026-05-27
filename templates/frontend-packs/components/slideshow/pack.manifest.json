@@ -1,0 +1,16 @@
+{
+  "name": "slideshow",
+  "type": "component-pack",
+  "description": "Hero slider and gallery browser components.",
+  "deps": {
+    "web": ["embla-carousel-react", "embla-carousel-autoplay"]
+  },
+  "copy": [
+    { "from": "SlideShow.tsx", "to": "apps/web/src/components/SlideShow.tsx" },
+    { "from": "HeroSlider.tsx", "to": "apps/web/src/components/HeroSlider.tsx" },
+    { "from": "GalleryBrowser.tsx", "to": "apps/web/src/components/GalleryBrowser.tsx" }
+  ],
+  "exports": {
+    "apps/web/src/components/index.ts": ["export { SlideShow } from './SlideShow'", "export type { SlideItem, SlideButton, SlideShowProps } from './SlideShow'"]
+  }
+}

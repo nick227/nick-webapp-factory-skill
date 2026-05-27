@@ -1,0 +1,74 @@
+# Merge these blocks into packages/api-spec/openapi.yaml
+
+# --- components/schemas ---
+
+MediaResult:
+  type: object
+  required: [url, key, mimeType, size]
+  properties:
+    url:      { type: string }
+    key:      { type: string }
+    mimeType: { type: string }
+    size:     { type: integer, description: File size in bytes }
+
+# --- paths ---
+
+/media/upload:
+  post:
+    operationId: uploadMedia
+    tags: [media]
+    summary: Upload a file
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required: [file]
+            properties:
+              file:
+                type: string
+                format: binary
+    responses:
+      '201':
+        description: Uploaded
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data: { $ref: '#/components/schemas/MediaResult' }
+      '413':
+        description: File too large
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+      '415':
+        description: Unsupported file type
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+/media/{key}:
+  delete:
+    operationId: deleteMedia
+    tags: [media]
+    parameters:
+      - in: path
+        name: key
+        required: true
+        schema: { type: string }
+    responses:
+      '200':
+        description: Deleted
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data: { nullable: true }
+      '404':
+        description: Not found
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }

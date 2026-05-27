@@ -1,0 +1,13 @@
+name: smart-media
+type: component-pack
+copy:
+  - MediaFrame.tsx -> apps/web/src/components/media/MediaFrame.tsx
+  - SmartImage.tsx -> apps/web/src/components/media/SmartImage.tsx
+  - SmartVideo.tsx -> apps/web/src/components/media/SmartVideo.tsx
+requires:
+  components:
+    - Skeleton
+exports:
+  - MediaFrame
+  - SmartImage
+  - SmartVideo

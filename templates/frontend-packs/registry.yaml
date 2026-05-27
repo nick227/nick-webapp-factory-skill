@@ -1,0 +1,47 @@
+version: 1
+packs:
+  designers:
+    - name: quality-designer
+      path: designers/quality-designer
+      adds: design brief workflow and style matrix
+  themes:
+    - name: admin-ops
+      path: themes/admin-ops
+      adds: restrained ops theme tokens
+    - name: creator-social
+      path: themes/creator-social
+      adds: warm social/community theme tokens
+  components:
+    - name: data-table
+      path: components/data-table
+      adds: sortable-looking table shell and toolbar
+    - name: activity-feed
+      path: components/activity-feed
+      adds: feed item and composer components
+    - name: smart-media
+      path: components/smart-media
+      adds: lazy image/video wrappers with shimmer and intrinsic size capture
+    - name: slideshow
+      path: components/slideshow
+      adds: hero slider (Embla, CTA overlay) and gallery browser (thumbnail grid + main view) — one SlideShow component, two modes
+      deps: [embla-carousel-react, embla-carousel-autoplay]
+    - name: animation
+      path: components/animation
+      status: planned
+      adds: Framer Motion animation primitives — FadeIn, SlideUp, StaggerList, PageTransition
+      deps: [framer-motion]
+    - name: charts
+      path: components/charts
+      status: planned
+      adds: Recharts chart components wired to project CSS token colors — Line, Bar, Area, Pie
+      deps: [recharts]
+  pages:
+    - name: dashboard
+      path: pages/dashboard
+      replaces: DashboardPage
+    - name: feed
+      path: pages/feed
+      replaces: FeedPage
+  mockContent:
+    - name: creator-social
+      path: mock-content/creator-social

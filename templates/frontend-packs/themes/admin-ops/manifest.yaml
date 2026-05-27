@@ -1,0 +1,6 @@
+name: admin-ops
+type: theme
+copy:
+  - tokens.css -> apps/web/src/styles/admin-ops.tokens.css
+apply:
+  - import './styles/admin-ops.tokens.css' from apps/web/src/main.tsx after index.css

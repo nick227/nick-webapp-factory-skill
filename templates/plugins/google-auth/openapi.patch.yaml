@@ -1,0 +1,41 @@
+# Merge these blocks into packages/api-spec/openapi.yaml
+
+# --- components/schemas ---
+# Add alongside existing schemas:
+
+GoogleAuthInput:
+  type: object
+  required: [credential]
+  properties:
+    credential:
+      type: string
+      description: Google ID token from the Sign-In button callback
+
+# --- paths ---
+# Add alongside existing paths:
+
+/auth/google:
+  post:
+    operationId: googleAuth
+    security: []
+    tags: [auth]
+    summary: Sign in or register with Google
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/GoogleAuthInput' }
+    responses:
+      '200':
+        description: Authenticated -- session token delivered via Set-Cookie (httpOnly)
+        headers:
+          Set-Cookie:
+            schema: { type: string }
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AuthResponse' }
+      '400':
+        description: Invalid Google credential
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }

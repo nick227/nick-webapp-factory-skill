@@ -1,0 +1,128 @@
+# Merge these blocks into packages/api-spec/openapi.yaml
+
+# --- components/schemas ---
+
+VideoGenRequest:
+  type: object
+  required: [prompt]
+  properties:
+    prompt:
+      type: string
+      maxLength: 2500
+      description: Text description of the video to generate
+    duration:
+      type: integer
+      enum: [5, 10]
+      default: 5
+      description: Duration in seconds (Kling supports 5 or 10)
+    aspectRatio:
+      type: string
+      enum: ['16:9', '9:16', '1:1']
+      default: '16:9'
+
+GeneratedVideo:
+  type: object
+  required: [id, status, prompt, provider, duration, aspectRatio, createdAt]
+  properties:
+    id:           { type: string }
+    status:
+      type: string
+      enum: [pending, processing, completed, failed]
+    prompt:       { type: string }
+    provider:     { type: string }
+    mediaUrl:     { type: string, nullable: true, description: Public video URL — set when completed }
+    thumbnailUrl: { type: string, nullable: true }
+    duration:     { type: integer }
+    aspectRatio:  { type: string }
+    errorMsg:     { type: string, nullable: true }
+    createdAt:    { type: string, format: date-time }
+    updatedAt:    { type: string, format: date-time }
+
+# --- paths ---
+
+/ai-video/generate:
+  post:
+    operationId: generateVideo
+    tags: [ai-video]
+    summary: Submit a video generation job
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VideoGenRequest'
+    responses:
+      '202':
+        description: Job submitted — poll /ai-video/status/{taskId} for completion
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/GeneratedVideo'
+      '400':
+        description: Invalid request
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+      '429':
+        description: Rate limit exceeded
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+/ai-video/status/{taskId}:
+  get:
+    operationId: getVideoStatus
+    tags: [ai-video]
+    summary: Poll the status of a video generation job
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: taskId
+        required: true
+        schema: { type: string }
+    responses:
+      '200':
+        description: Current job status
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/GeneratedVideo'
+      '404':
+        description: Task not found or does not belong to the authenticated user
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+/ai-video/history:
+  get:
+    operationId: listGeneratedVideos
+    tags: [ai-video]
+    summary: List the authenticated user's generated videos
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+    responses:
+      '200':
+        description: Paginated video list
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [data, meta]
+              properties:
+                data:
+                  type: array
+                  items: { $ref: '#/components/schemas/GeneratedVideo' }
+                meta:
+                  $ref: '#/components/schemas/PaginatedMeta'

@@ -1,0 +1,6 @@
+name: creator-social
+type: theme
+copy:
+  - tokens.css -> apps/web/src/styles/creator-social.tokens.css
+apply:
+  - import './styles/creator-social.tokens.css' from apps/web/src/main.tsx after index.css

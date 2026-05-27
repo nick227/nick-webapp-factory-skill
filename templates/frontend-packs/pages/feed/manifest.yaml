@@ -1,0 +1,12 @@
+name: feed
+type: page-pack
+replaces:
+  - FeedPage
+copy:
+  - FeedPage.tsx -> apps/web/src/pages/FeedPage.tsx
+requires:
+  hooks:
+    - useFeed
+    - useCreatePost
+  components:
+    - activity-feed

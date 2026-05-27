@@ -1,0 +1,103 @@
+# Merge these blocks into packages/api-spec/openapi.yaml
+
+# --- components/schemas ---
+
+ImageGenRequest:
+  type: object
+  required: [prompt]
+  properties:
+    prompt:
+      type: string
+      maxLength: 1000
+      description: Text description of the image to generate
+    width:
+      type: integer
+      minimum: 256
+      maximum: 1536
+      default: 512
+      description: Image width in pixels (clamped to provider limits)
+    height:
+      type: integer
+      minimum: 256
+      maximum: 1536
+      default: 512
+      description: Image height in pixels (clamped to provider limits)
+
+GeneratedImage:
+  type: object
+  required: [id, url, key, prompt, provider, width, height, createdAt]
+  properties:
+    id:        { type: string }
+    url:       { type: string, description: Public URL of the generated image }
+    key:       { type: string, description: Storage key for deletion }
+    prompt:    { type: string }
+    provider:  { type: string, description: Which provider generated this image }
+    width:     { type: integer }
+    height:    { type: integer }
+    createdAt: { type: string, format: date-time }
+
+# --- paths ---
+
+/ai-image/generate:
+  post:
+    operationId: generateImage
+    tags: [ai-image]
+    summary: Generate an image from a text prompt
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImageGenRequest'
+    responses:
+      '201':
+        description: Image generated and stored
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/GeneratedImage'
+      '400':
+        description: Invalid prompt or dimensions
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+      '429':
+        description: Rate limit exceeded
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+      '502':
+        description: Provider error
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+/ai-image/history:
+  get:
+    operationId: listGeneratedImages
+    tags: [ai-image]
+    summary: List the authenticated user's generated images
+    security:
+      - bearerAuth: []
+    parameters:
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+    responses:
+      '200':
+        description: Paginated image list
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [data, meta]
+              properties:
+                data:
+                  type: array
+                  items: { $ref: '#/components/schemas/GeneratedImage' }
+                meta:
+                  $ref: '#/components/schemas/PaginatedMeta'

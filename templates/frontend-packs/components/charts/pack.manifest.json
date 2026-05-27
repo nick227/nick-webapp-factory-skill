@@ -1,0 +1,19 @@
+{
+  "name": "charts",
+  "type": "component-pack",
+  "description": "Recharts chart components wired to CSS token colors.",
+  "deps": {
+    "web": ["recharts"]
+  },
+  "copy": [
+    { "from": "chart-utils.ts", "to": "apps/web/src/components/charts/chart-utils.ts" },
+    { "from": "LineChart.tsx", "to": "apps/web/src/components/charts/LineChart.tsx" },
+    { "from": "BarChart.tsx", "to": "apps/web/src/components/charts/BarChart.tsx" },
+    { "from": "AreaChart.tsx", "to": "apps/web/src/components/charts/AreaChart.tsx" },
+    { "from": "PieChart.tsx", "to": "apps/web/src/components/charts/PieChart.tsx" },
+    { "from": "index.ts", "to": "apps/web/src/components/charts/index.ts" }
+  ],
+  "manual": [
+    "Only install when the app has a real analytics/reporting need."
+  ]
+}

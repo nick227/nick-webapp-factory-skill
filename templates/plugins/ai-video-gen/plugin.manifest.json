@@ -1,0 +1,28 @@
+{
+  "name": "ai-video-gen",
+  "type": "plugin",
+  "description": "Text-to-video generation with async polling, Kling provider, and media history.",
+  "requires": ["file-upload"],
+  "deps": {},
+  "copy": [
+    { "from": "server/providers/videogen.ts", "to": "apps/server/src/providers/videogen.ts" },
+    { "from": "server/providers/KlingProvider.ts", "to": "apps/server/src/providers/KlingProvider.ts" },
+    { "from": "server/services/VideoGenService.ts", "to": "apps/server/src/services/VideoGenService.ts" },
+    { "from": "server/handlers/videoGen.ts", "to": "apps/server/src/handlers/videoGen.ts" },
+    { "from": "sdk/hooks/useVideoGen.ts", "to": "packages/sdk/src/hooks/useVideoGen.ts" },
+    { "from": "web/components/VideoGenWidget.tsx", "to": "apps/web/src/components/VideoGenWidget.tsx" }
+  ],
+  "patches": {
+    "env": "env.patch.md",
+    "schema": "schema.patch.md",
+    "openapi": "openapi.patch.yaml"
+  },
+  "exports": {
+    "apps/server/src/handlers/index.ts": ["export * from './videoGen'"],
+    "packages/sdk/src/hooks/index.ts": ["export * from './useVideoGen'"]
+  },
+  "manual": [
+    "Install file-upload first.",
+    "Merge schema/openapi pending patches, then run pnpm db:push, pnpm sdk:generate, and pnpm test:generate."
+  ]
+}

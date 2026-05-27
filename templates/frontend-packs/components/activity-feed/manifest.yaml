@@ -1,0 +1,14 @@
+name: activity-feed
+type: component-pack
+copy:
+  - ActivityFeed.tsx -> apps/web/src/components/activity/ActivityFeed.tsx
+  - ActivityComposer.tsx -> apps/web/src/components/activity/ActivityComposer.tsx
+requires:
+  components:
+    - Avatar
+    - Button
+    - Card
+    - Textarea
+exports:
+  - ActivityFeed
+  - ActivityComposer

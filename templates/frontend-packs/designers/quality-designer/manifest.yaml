@@ -1,0 +1,23 @@
+name: quality-designer
+type: design-workflow
+copy:
+  - design-brief.md -> docs/design-brief.md
+  - visual-system.md -> docs/visual-system.md
+  - asset-plan.md -> docs/asset-plan.md
+  - design-critique.md -> docs/design-critique.md
+read:
+  - style-matrix.yaml
+  - anti-defaults.md
+  - screenshot-gate.md
+outputs:
+  - docs/design-brief.md
+  - docs/visual-system.md
+  - docs/asset-plan.md
+  - docs/design-critique.md
+selects:
+  - themes
+  - component-packs
+  - page-packs
+  - mock-content
+gates:
+  - visual-qa

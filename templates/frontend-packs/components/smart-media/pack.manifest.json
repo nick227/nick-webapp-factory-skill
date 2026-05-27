@@ -1,0 +1,14 @@
+{
+  "name": "smart-media",
+  "type": "component-pack",
+  "description": "Lazy image/video wrappers with shimmer and intrinsic size capture.",
+  "requires": ["Skeleton"],
+  "copy": [
+    { "from": "MediaFrame.tsx", "to": "apps/web/src/components/media/MediaFrame.tsx" },
+    { "from": "SmartImage.tsx", "to": "apps/web/src/components/media/SmartImage.tsx" },
+    { "from": "SmartVideo.tsx", "to": "apps/web/src/components/media/SmartVideo.tsx" }
+  ],
+  "exports": {
+    "apps/web/src/components/media/index.ts": ["export * from './MediaFrame'", "export * from './SmartImage'", "export * from './SmartVideo'"]
+  }
+}

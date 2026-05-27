@@ -1,0 +1,16 @@
+{
+  "name": "vercel",
+  "type": "deploy-plugin",
+  "description": "Vercel deployment config for the Vite frontend.",
+  "requires": [],
+  "copy": [
+    { "from": "vercel.json", "to": "vercel.json" }
+  ],
+  "patches": {
+    "env": "env.patch.md"
+  },
+  "manual": [
+    "Run vercel link or configure the project in Vercel.",
+    "Set VITE_API_URL in Vercel environment variables."
+  ]
+}

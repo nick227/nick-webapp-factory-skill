@@ -1,0 +1,17 @@
+{
+  "fileId": "YOUR_FIGMA_FILE_ID",
+  "mapping": {
+    "Brand/Primary 500":      "--primary",
+    "Brand/Primary 900":      "--primary-foreground",
+    "Neutral/Background":     "--background",
+    "Neutral/Foreground":     "--foreground",
+    "Neutral/Card":           "--card",
+    "Neutral/Card Foreground":"--card-foreground",
+    "Neutral/Muted":          "--muted",
+    "Neutral/Muted Foreground":"--muted-foreground",
+    "Neutral/Border":         "--border",
+    "Brand/Accent":           "--accent",
+    "Brand/Accent Foreground":"--accent-foreground",
+    "Semantic/Destructive":   "--destructive"
+  }
+}

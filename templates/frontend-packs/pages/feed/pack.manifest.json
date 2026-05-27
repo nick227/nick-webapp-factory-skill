@@ -1,0 +1,13 @@
+{
+  "name": "feed",
+  "type": "page-pack",
+  "description": "Composed FeedPage using feed SDK hooks and activity-feed components.",
+  "requires": ["activity-feed", "useFeed", "useCreatePost"],
+  "copy": [
+    { "from": "FeedPage.tsx", "to": "apps/web/src/pages/FeedPage.tsx" }
+  ],
+  "manual": [
+    "Install activity-feed first.",
+    "Only use when the OpenAPI spec exposes compatible feed hooks."
+  ]
+}

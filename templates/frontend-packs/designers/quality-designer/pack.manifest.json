@@ -1,0 +1,15 @@
+{
+  "name": "quality-designer",
+  "type": "design-workflow",
+  "description": "Design brief workflow and style matrix for non-generic visual direction.",
+  "copy": [
+    { "from": "design-brief.md", "to": "docs/design-brief.md" },
+    { "from": "visual-system.md", "to": "docs/visual-system.md" },
+    { "from": "asset-plan.md", "to": "docs/asset-plan.md" },
+    { "from": "design-critique.md", "to": "docs/design-critique.md" }
+  ],
+  "manual": [
+    "Read style-matrix.yaml, anti-defaults.md, and screenshot-gate.md before designing.",
+    "Run visual QA after the app is runnable."
+  ]
+}

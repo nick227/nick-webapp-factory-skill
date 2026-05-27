@@ -1,0 +1,23 @@
+name: slideshow
+type: component
+adds: hero slider and gallery browser — one SlideShow component, two modes (hero/gallery)
+deps:
+  web:
+    - embla-carousel-react
+    - embla-carousel-autoplay
+copy:
+  - SlideShow.tsx -> apps/web/src/components/SlideShow.tsx
+  - HeroSlider.tsx -> apps/web/src/components/HeroSlider.tsx
+  - GalleryBrowser.tsx -> apps/web/src/components/GalleryBrowser.tsx
+exports:
+  - "export { SlideShow } from './SlideShow'"
+  - "export type { SlideItem, SlideButton, SlideShowProps } from './SlideShow'"
+usage: |
+  // Hero mode — homepage, feature showcases, onboarding
+  <SlideShow mode="hero" items={slides} className="h-screen" />
+
+  // Gallery mode — product images, media browser, generated content
+  <SlideShow mode="gallery" items={products} onSelect={(item, i) => setSelected(i)} className="h-[600px]" />
+
+  // Hero with autoplay (ms interval) — use sparingly, CTAs become unreadable
+  <SlideShow mode="hero" items={slides} autoPlay={5000} className="h-screen" />

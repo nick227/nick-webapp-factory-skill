@@ -1,0 +1,18 @@
+{
+  "name": "railway",
+  "type": "deploy-plugin",
+  "description": "Railway deployment files for Fastify server and MySQL.",
+  "requires": [],
+  "copy": [
+    { "from": "railway.json", "to": "railway.json" },
+    { "from": "Dockerfile", "to": "Dockerfile" }
+  ],
+  "patches": {
+    "env": "env.patch.md"
+  },
+  "manual": [
+    "Create/link Railway project and MySQL service.",
+    "Set production env vars in Railway dashboard.",
+    "Confirm /health after deploy."
+  ]
+}

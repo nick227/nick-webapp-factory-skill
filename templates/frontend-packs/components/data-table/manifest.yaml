@@ -1,0 +1,10 @@
+name: data-table
+type: component-pack
+copy:
+  - DataTable.tsx -> apps/web/src/components/data/DataTable.tsx
+requires:
+  components:
+    - Button
+    - Input
+exports:
+  - DataTable

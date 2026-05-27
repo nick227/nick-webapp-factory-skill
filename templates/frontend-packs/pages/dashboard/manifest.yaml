@@ -1,0 +1,9 @@
+name: dashboard
+type: page-pack
+replaces:
+  - DashboardPage
+copy:
+  - DashboardPage.tsx -> apps/web/src/pages/DashboardPage.tsx
+requires:
+  components:
+    - Card

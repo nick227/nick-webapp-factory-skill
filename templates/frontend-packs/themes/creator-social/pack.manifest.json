@@ -1,0 +1,11 @@
+{
+  "name": "creator-social",
+  "type": "theme",
+  "description": "Warm creator/community token set.",
+  "copy": [
+    { "from": "tokens.css", "to": "apps/web/src/styles/creator-social.tokens.css" }
+  ],
+  "manual": [
+    "Import './styles/creator-social.tokens.css' from apps/web/src/main.tsx after index.css."
+  ]
+}

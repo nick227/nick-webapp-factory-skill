@@ -1,0 +1,19 @@
+{
+  "name": "cloudflare-r2",
+  "type": "plugin",
+  "description": "Cloudflare R2 storage provider for the file-upload plugin.",
+  "requires": ["file-upload"],
+  "deps": {
+    "server": ["@aws-sdk/client-s3"]
+  },
+  "copy": [
+    { "from": "server/providers/R2StorageProvider.ts", "to": "apps/server/src/providers/R2StorageProvider.ts" }
+  ],
+  "patches": {
+    "env": "env.patch.md"
+  },
+  "manual": [
+    "Set STORAGE_PROVIDER=r2 in .env.",
+    "Restart the server after configuring R2 credentials."
+  ]
+}

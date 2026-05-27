@@ -1,0 +1,9 @@
+{
+  "name": "dashboard",
+  "type": "page-pack",
+  "description": "Compact dashboard page scaffold.",
+  "requires": ["Card"],
+  "copy": [
+    { "from": "DashboardPage.tsx", "to": "apps/web/src/pages/DashboardPage.tsx" }
+  ]
+}

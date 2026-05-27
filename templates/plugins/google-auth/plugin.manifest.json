@@ -1,0 +1,28 @@
+{
+  "name": "google-auth",
+  "type": "plugin",
+  "description": "Google Sign-In ID token flow that creates or merges users and sets the session cookie.",
+  "requires": [],
+  "deps": {
+    "server": ["google-auth-library"]
+  },
+  "copy": [
+    { "from": "server/handlers/googleAuth.ts", "to": "apps/server/src/handlers/googleAuth.ts" },
+    { "from": "server/services/GoogleAuthService.ts", "to": "apps/server/src/services/GoogleAuthService.ts" },
+    { "from": "sdk/hooks/useGoogleAuth.ts", "to": "packages/sdk/src/hooks/useGoogleAuth.ts" },
+    { "from": "web/components/GoogleLoginButton.tsx", "to": "apps/web/src/components/GoogleLoginButton.tsx" }
+  ],
+  "patches": {
+    "env": "env.patch.md",
+    "schema": "schema.patch.md",
+    "openapi": "openapi.patch.yaml"
+  },
+  "exports": {
+    "apps/server/src/handlers/index.ts": ["export * from './googleAuth'"],
+    "packages/sdk/src/hooks/index.ts": ["export * from './useGoogleAuth'"]
+  },
+  "manual": [
+    "Merge schema/openapi pending patches, then run pnpm db:push and pnpm sdk:generate.",
+    "Place GoogleLoginButton on the login/register screens."
+  ]
+}
