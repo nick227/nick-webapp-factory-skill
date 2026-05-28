@@ -33,6 +33,26 @@ The smoke script builds a fresh app in a unique temp directory, copies canonical
 
 The fixture uses SQLite so the smoke test is self-contained. Product apps still default to MySQL unless their approved MVP overrides the database.
 
+## Verified Baseline
+
+Verified on Windows / PowerShell on 2026-05-27:
+
+- `pnpm install`
+- `pnpm db:push`
+- `pnpm sdk:generate`
+- `pnpm sdk:check`
+- `pnpm test:generate`
+- `pnpm pages:generate`
+- `pnpm typecheck`
+- server boot check
+- web boot check
+- `pnpm test`
+- `pnpm db:seed`
+- `pnpm --filter web exec playwright install chromium`
+- `pnpm --filter web test:e2e`
+
+Result: 10 Vitest server tests passed and 3 Playwright Chromium tests passed.
+
 Playwright requires host browser libraries. On Debian/Ubuntu runners, install them once with:
 
 ```bash

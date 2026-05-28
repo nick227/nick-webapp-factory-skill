@@ -35,6 +35,13 @@ export function Form<T extends Record<string, unknown>>({
   isLoading = false,
   className,
 }: FormProps<T>) {
+  function normalizeSubmitData(data: T) {
+    const optionalFields = new Set(fields.filter((field) => !field.required).map((field) => field.name))
+    return Object.fromEntries(
+      Object.entries(data).filter(([key, value]) => !(optionalFields.has(key) && value === ''))
+    ) as T
+  }
+
   const {
     register,
     handleSubmit,
@@ -46,7 +53,10 @@ export function Form<T extends Record<string, unknown>>({
   })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={cn('flex flex-col gap-4', className)}>
+    <form
+      onSubmit={handleSubmit((data) => onSubmit(normalizeSubmitData(data)))}
+      className={cn('flex flex-col gap-4', className)}
+    >
       {fields.map(field => {
         const id = `field-${field.name}`
         return (
