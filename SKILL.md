@@ -39,6 +39,7 @@ Only read a reference file when the current task matches its trigger.
 | Trigger | Load |
 |---|---|
 | Scaffolding, stack decisions, OpenAPI, SDK generation, folder structure, architecture rules, code style | `references/core-architecture.md` |
+| Phase 0 — discovery questions, MVP definition format, approval gate | `references/discovery.md` |
 | Phase 0/1 planning, MVP scope, default app modules, social app defaults, domain model choices | `references/domain-defaults.md` |
 | Plugin/package/library selection, integrations, auth, uploads, email, payments, search | `references/plugin-catalog.md` |
 | Frontend pages, UI packs, themes, dashboards, landing pages, visual component generation | `references/frontend-pack-catalog.md` |

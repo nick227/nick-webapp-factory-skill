@@ -6,7 +6,7 @@ The skill currently contains:
 
 - 1 root skill definition: `SKILL.md`
 - 22 reference documents in `references/`
-- 198 files across `references/` and `templates/`
+- 199 files across `references/` and `templates/`
 - 8 installable plugins
 - 12 frontend packs
 - 8 root automation scripts
@@ -151,9 +151,12 @@ The root `templates/` inventory:
 - `apps/server/package.json`
 - `apps/web/package.json`
 - `packages/db/package.json`
-- `packages/shared/package.json`
-- TS config placement
+- `packages/db/src/client.ts`
+- TypeScript config placement (copy table mapping each tsconfig file to its destination)
 - Env examples and README structure
+- CLAUDE.md template
+
+`packages/shared` is intentionally omitted — it is a near-empty placeholder (`src/types/` only, per `references/core-architecture.md`) and can be created inline with a minimal `package.json`; no template needed.
 
 It is the package scaffold reference for Phase 1 and can be consulted at any phase.
 
