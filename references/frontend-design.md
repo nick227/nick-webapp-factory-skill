@@ -148,10 +148,10 @@ Key behaviors to know:
 `templates/components/Button.tsx` — `cva`-based with 5 variants (`default`, `outline`, `ghost`, `destructive`, `link`) and 4 sizes (`sm`, `md`, `lg`, `icon`). `loading` prop replaces children with `<Spinner size="sm">` and disables the button.
 
 ### Input (voice-enabled)
-`templates/components/Input.tsx` — all text inputs use this primitive, never raw `<input>`. The `voice` prop adds a microphone button via the shared Web Speech API hook; degrades gracefully if the API is unavailable. `onVoiceResult` fires with the transcript and also triggers `onChange` so react-hook-form picks it up.
+`templates/components/Input.tsx` — all text inputs use this primitive, never raw `<input>`. **Voice-by-default:** The microphone capability is enabled by default as a deliberate factory standard. It uses the shared Web Speech API hook and degrades gracefully if the API is unavailable. Use `voice={false}` to explicitly opt out. `onVoiceResult` fires with the transcript and also triggers `onChange` so react-hook-form picks it up.
 
 ### Textarea (voice-enabled)
-`templates/components/Textarea.tsx` — same as Input but uses `continuous: true` recognition to handle longer dictation. `voiceMode="append"` is the default.
+`templates/components/Textarea.tsx` — same as Input but uses `continuous: true` recognition to handle longer dictation. **Voice is enabled by default.** `voiceMode="append"` is the default.
 
 `templates/components/voice/useSpeechRecognition.ts` and `templates/components/voice/VoiceButton.tsx` — shared speech-to-text primitives used by Input/Textarea and any frontend pack that needs a mic button.
 

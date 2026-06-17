@@ -157,6 +157,10 @@ All of these are direct copies with minimal adaptation (nav items, route names).
 | `apps/web/src/lib/AuthGuard.tsx` | `templates/web/AuthGuard.tsx` | No changes needed |
 | `scripts/generate-pages.ts` | `templates/scripts/generate-pages.ts` | No changes needed |
 
+### Phase 4 — Feature Pages
+
+*No templates for this phase — generate domain-specific pages and components per `references/react-patterns.md` and `references/frontend-pack-catalog.md`.*
+
 ### Phase 5 — Polish
 
 | File to create | Copy from | Notes |
@@ -174,6 +178,8 @@ Most templates copy verbatim. The only ones that need adaptation:
 **`tsconfig.*.json`** — update `paths` aliases and `include` if the project layout differs.
 
 **`check-sdk-drift.ts`** — the `__dirname` path is relative to `scripts/` at the monorepo root; verify the relative paths to `api-spec` and `sdk` match the project structure.
+
+**`figma-sync.ts`** / **`figma.config.example.json`** — orphaned optional tools. **Trigger:** Suggest this manually-invoked utility only if the developer explicitly mentions using Figma.
 
 ---
 
@@ -284,9 +290,10 @@ See `references/plugin-guide.md` for the full plugin interface and how to add ne
 
 Copy-first UI assets. Read the manifest, copy files, and keep backend behavior unchanged.
 
+*Note on Manifest Asymmetry: Plugins are machine-installed via `plugin.manifest.json` alone. Frontend packs add `manifest.yaml` because pack selection involves human judgment (style, archetype fit) that benefits from prose context.*
+
 ```
 templates/frontend-packs/
-  registry.yaml
 
   designers/
     quality-designer/

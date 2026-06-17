@@ -19,6 +19,8 @@ Plugins extend the factory with optional full-stack features. Each plugin is sel
 
 **Media generation plugins** (`ai-image-gen`, `ai-video-gen`) store generated files through the `file-upload` plugin's `StorageProvider`. Install `file-upload` first. Generated media goes to whatever storage backend is configured (`local`, `r2`, `s3`, etc.).
 
+**Dependency Resolution:** Plugin dependencies (e.g. `file-upload` required by `ai-video-gen`) are **hard failures**, not auto-installs. The `factory-add.ts` script should error clearly (e.g., "install file-upload first") rather than silently expanding the scope to install missing dependencies.
+
 Plugins to build next: `websockets`, `stripe`, `aws-s3`, `push-notifications`, `prisma-postgres`.
 
 ---
@@ -72,6 +74,9 @@ When the developer requests a plugin feature:
 5. Write `openapi.patch.yaml` — only the new paths and schemas; leave existing spec unchanged
 6. Write `plugin.manifest.json` — copy map, deps, patches, exports, and manual follow-up
 7. Write server/SDK/frontend files — treat these as real template files: no TODOs, no placeholder logic
+
+*(Note: The `factory-add.ts` installer discovers plugins dynamically by folder name at `templates/plugins/{name}`. The following steps are purely for human documentation and are not mechanical requirements for the installer to work.)*
+
 8. Add a row to the Plugin Catalog table above
 9. Add a row to `references/registry.md` plugin section
 

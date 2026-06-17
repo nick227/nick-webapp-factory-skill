@@ -8,30 +8,7 @@ The client uses `openapi-fetch` — a typed fetch wrapper auto-derived from the 
 
 ## Package Setup
 
-```json
-// packages/sdk/package.json
-{
-  "name": "@project/sdk",
-  "version": "0.0.1",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "generate": "tsx scripts/generate.ts"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.0.0",
-    "openapi-fetch": "^0.12.0"
-  },
-  "devDependencies": {
-    "openapi-typescript": "^7.0.0",
-    "tsx": "^4.0.0"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0"
-  }
-}
-```
+*Use the `packages/sdk/package.json` template from `templates/monorepo-base.md` as the authoritative source. Do not re-write it from scratch.*
 
 ---
 

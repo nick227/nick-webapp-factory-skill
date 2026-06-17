@@ -81,7 +81,7 @@ it('cannot delete another user's post', async () => {
 |---|---|
 | Route coverage | One `describe` per `operationId` — impossible to miss a route |
 | Auth enforcement | 401 test generated for every protected route |
-| Response shape | `validateResponse` checks body against spec schema via Ajv |
+| Response shape | `validateResponse` checks body against spec schema via Ajv *(Note: streaming endpoints like SSE are an exception and cannot have their chunked payload auto-validated via Ajv; manual Playwright coverage is required)* |
 | New routes | Re-run `pnpm test:generate` — appends stubs, never overwrites filled-in tests |
 | Cross-user tests | `testOtherUserId` exported in every generated file — use it |
 

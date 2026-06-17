@@ -5,8 +5,8 @@ This document maps the architecture of the `nick-webapp-factory` skill itself: h
 The skill currently contains:
 
 - 1 root skill definition: `SKILL.md`
-- 17 reference documents in `references/`
-- 195 files across `references/` and `templates/`
+- 22 reference documents in `references/`
+- 198 files across `references/` and `templates/`
 - 8 installable plugins
 - 12 frontend packs
 - 8 root automation scripts
@@ -71,25 +71,32 @@ It defines:
 
 Reference files are loaded on demand, not all at once. They are the skill's policy and pattern library.
 
+*Note on audience: This file (`SKILL_ARCHITECTURE.md`) is a human-facing meta-doc used for auditing and maintaining the skill's structure. It is intentionally omitted from `SKILL.md`'s loading tables so building agents don't load it during regular operation. The files inside `references/` are the operational documents for the building agent.*
+
 | File | Lines | Role |
 |---|---:|---|
 | `references/discovery.md` | 177 | Phase 0 discovery questions, MVP definition format, approval gate, and scope discipline. |
-| `references/openapi-conventions.md` | 287 | Phase 1 OpenAPI skeleton, schema conventions, auth/security conventions, operationId expectations, and response envelope rules. |
+| `references/openapi-conventions.md` | 312 | Phase 1 OpenAPI skeleton, schema conventions, auth/security conventions, operationId expectations, and response envelope rules. |
 | `references/prisma-patterns.md` | 148 | Phase 1 Prisma model conventions, social schema defaults, relation naming, soft delete patterns, and seed expectations. |
-| `references/sdk-patterns.md` | 378 | Phase 1 and Phase 4 SDK structure, generated types, `openapi-fetch`, React Query hook patterns, and drift checking. |
+| `references/sdk-patterns.md` | 355 | Phase 1 and Phase 4 SDK structure, generated types, `openapi-fetch`, React Query hook patterns, and drift checking. |
 | `references/list-query-conventions.md` | 161 | Cursor pagination, list/search query parameters, envelopes, filters, sorting, and infinite query behavior. |
 | `references/fastify-patterns.md` | 196 | Phase 2 Fastify setup, `fastify-openapi-glue`, handler/service split, security handlers, and no manual route registration. |
 | `references/testing-patterns.md` | 341 | Phase 2 server integration tests, generated stubs, test helpers, Ajv response validation, Playwright smoke tests. |
 | `references/frontend-design.md` | 276 | Phase 3 design system: mobile-first layout, tokens, primitives, Tailwind conventions, interaction states, and UI constraints. |
 | `references/react-patterns.md` | 317 | Phase 4 page/component conventions, SDK hook usage, form patterns, loading/empty/error states, and component boundaries. |
 | `references/social-modules.md` | 138 | Reusable social app modules: auth, profile, follows, posts/feed, comments, reactions, notifications, media, search, settings. |
-| `references/documentation-phase.md` | 597 | Phase 6 generated docs, narrative docs, admin docs, deployment docs, and documentation checklists. |
+| `references/documentation-phase.md` | 220 | Phase 6 generated docs, narrative docs, admin docs, deployment docs, and documentation checklists. |
 | `references/session-close.md` | 205 | Phase 5 closeout protocol: tests, app startup, seed credentials, browser checklist, and developer confirmation. |
-| `references/registry.md` | 363 | Human-readable index of canonical templates and why templates should be copied verbatim. |
-| `references/plugin-guide.md` | 99 | Plugin interface, plugin catalog, installation flow, required files, patch handling, and new plugin creation rules. |
+| `references/registry.md` | 374 | Human-readable index of canonical templates and why templates should be copied verbatim. |
+| `references/plugin-guide.md` | 104 | Plugin interface, plugin catalog, installation flow, required files, patch handling, and new plugin creation rules. |
 | `references/frontend-pack-guide.md` | 23 | Frontend pack installation flow and constraints. |
 | `references/quality-designer.md` | 119 | Design-heavy workflow for visual direction, style selection, asset planning, and critique. |
 | `references/visual-qa.md` | 26 | Visual QA gate for screenshot review and design polish. |
+| `references/admin-pipeline.md` | 383 | Phase 4 admin panel pipeline: schema, routes, handlers, and frontend components. |
+| `references/core-architecture.md` | 148 | Top-level rules, folder structure, default stack, and OpenAPI → SDK pipeline. |
+| `references/domain-defaults.md` | 37 | Guidance on selecting default app modules and MVP scoping rules. |
+| `references/plugin-catalog.md` | 22 | Index of optional backend/plugin modules for installation. |
+| `references/frontend-pack-catalog.md` | 28 | Index of optional frontend-pack themes, components, and workflows. |
 
 ### Reference Loading Map
 
@@ -119,7 +126,7 @@ The root `templates/` inventory:
 | `templates/components/` | 11 | Core UI primitives and voice input helpers. |
 | `templates/configs/` | 7 | Tailwind, PostCSS, CSS tokens, TypeScript configs, Playwright config. |
 | `templates/db/` | 1 | Seed script template. |
-| `templates/frontend-packs/` | 60 | Optional design workflows, themes, components, pages, and mock content. |
+| `templates/frontend-packs/` | 59 | Optional design workflows, themes, components, pages, and mock content. |
 | `templates/github/` | 3 | CI, Dependabot, and pull request template. |
 | `templates/layouts/` | 1 | App shell layout. |
 | `templates/lib/` | 2 | Shared frontend utilities. |
@@ -269,17 +276,17 @@ Important limitation: schema and OpenAPI patches are staged for manual merge. Th
 
 Frontend packs are optional UI and design assets. They do not add backend routes and must not introduce raw frontend fetch calls.
 
-### Registry
+### Structure
 
-`templates/frontend-packs/registry.yaml` is the high-level catalog.
+The templates are organized into:
 
-It groups packs into:
+- `designers/`
+- `themes/`
+- `components/`
+- `pages/`
+- `mock-content/`
 
-- `designers`
-- `themes`
-- `components`
-- `pages`
-- `mockContent`
+The catalog of all available packs is in `references/frontend-pack-catalog.md`.
 
 ### Design Workflow
 
@@ -477,7 +484,7 @@ Use this checklist when auditing the skill:
 - Every reference file listed in `SKILL.md` exists.
 - Every plugin listed in `SKILL.md` has a directory, README, and `plugin.manifest.json`.
 - Every frontend pack listed in `SKILL.md` has `manifest.yaml` and `pack.manifest.json`.
-- `templates/frontend-packs/registry.yaml` agrees with the actual pack directories.
+- `references/frontend-pack-catalog.md` agrees with the actual pack directories.
 - `templates/scripts/factory-add.ts` supports the current manifest schema.
 - `references/registry.md` includes new core templates.
 - CI, Playwright, SDK drift, page generation, docs generation, and test generation templates remain coherent with the default stack.

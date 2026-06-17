@@ -214,6 +214,31 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/AuthResponse' }
 
+  /users/me:
+    put:
+      operationId: updateCurrentUser
+      tags: [users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string, minLength: 3, maxLength: 30 }
+                displayName: { type: string, minLength: 1, maxLength: 50 }
+                bio: { type: string, nullable: true }
+                avatarUrl: { type: string, nullable: true }
+      responses:
+        '200':
+          description: Updated user profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/User' }
+
   /posts:
     post:
       operationId: createPost

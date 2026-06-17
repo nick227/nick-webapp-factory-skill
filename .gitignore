@@ -1,2 +1,4 @@
 .factory-smoke/
 node_modules/
+tsconfig.json
+.fallow/
